@@ -1,0 +1,1 @@
+zenity --notification --window-icon="info" --text="You have been sitting at the computer for $1 hour, I advise you to rest for $2 minutes"
