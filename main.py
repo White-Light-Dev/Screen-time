@@ -17,8 +17,10 @@ else:
 
 time.sleep(working_hours_n)
 os.system("./notification.sh {0} {1}".format(working_hours, time_relax))
+print('\a')
 working_hours_n += time_relax_n
 
 while 1:
     time.sleep(working_hours_n)
     os.system("./notification.sh {0} {1}".format(working_hours - time_relax, time_relax))
+    print('\a')
