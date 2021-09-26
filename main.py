@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import time
 import os
 from config import *
@@ -16,11 +17,10 @@ else:
     time_relax_n = time_relax * 100
 
 time.sleep(working_hours_n)
-os.system("./notification.sh {0} {1}".format(working_hours, time_relax))
+os.system(f"./notification.sh {working_hours} {time_relax}")
 print('\a')
-working_hours_n += time_relax_n
 
 while 1:
-    time.sleep(working_hours_n)
-    os.system("./notification.sh {0} {1}".format(working_hours - time_relax, time_relax))
+    time.sleep(working_hours_n + time_relax_n)
+    os.system(f"./notification.sh {working_hours} {time_relax}")
     print('\a')
