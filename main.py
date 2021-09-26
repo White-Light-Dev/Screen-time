@@ -15,14 +15,10 @@ if time_relax >= 1:
 else:
     time_relax_n = time_relax * 100
 
-time_passed = 0
+time.sleep(working_hours_n)
+os.system("./notification.sh {0} {1}".format(working_hours, time_relax))
+working_hours_n += time_relax_n
 
 while 1:
-    if time_passed == 0:
-        time.sleep(working_hours_n)
-        time_passed += 1
-        os.system("./notification.sh {0} {1}".format(working_hours, time_relax))
-        working_hours_n += time_relax_n
-    else:
-        time.sleep(working_hours_n)
-        os.system("./notification.sh {0} {1}".format(working_hours, time_relax))
+    time.sleep(working_hours_n)
+    os.system("./notification.sh {0} {1}".format(working_hours - time_relax, time_relax))
