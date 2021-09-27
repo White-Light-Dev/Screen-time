@@ -1,6 +1,6 @@
 Screen-time v1.1
 ================
-This program at a certain time displays a message that it is time for the user to take a break from the screen.
+This program at a certain time displays a message that it is time for the user to take a break from the screen. Working on Linux.
 
 EN
 ==
