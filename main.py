@@ -1,26 +1,97 @@
-#!/usr/bin/python
 import time
 import os
-from config import *
+import asyncio
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
-os.system("chmod +x notification.sh") # выдаём право на исполнение
+try:
+    from config import *
+except:
+    print("\033[31mCorrupted config.py file")
+    print("\033[0m")
 
-# преобразование минут в секунды
-if working_hours >= 1:
-    working_hours_n = round(60 * int(working_hours) + (working_hours - int(working_hours)) * 100)
-else:
-    working_hours_n = working_hours * 100
 
-if time_relax >= 1:
-    time_relax_n = round(60 * int(time_relax) + (time_relax - int(time_relax)) * 100)
-else:
-    time_relax_n = time_relax * 100
+class Window(Gtk.Window):
+    def __init__(self):
+        super().__init__(title="Screen time")
+        self.set_border_width(10)
 
-time.sleep(working_hours_n)
-os.system(f"./notification.sh {working_hours} {time_relax}")
-print('\a')
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        self.add(vbox)
 
-while 1:
-    time.sleep(working_hours_n + time_relax_n)
-    os.system(f"./notification.sh {working_hours} {time_relax}")
-    print('\a')
+        header = Gtk.HeaderBar(title="Screen time")
+        header.props.show_close_button = True
+        
+
+        stack = Gtk.Stack()
+        stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
+        stack.set_transition_duration(1000)
+        self.label = Gtk.Label()
+        self.label.set_markup(f"<b>You have been sitting at the computer for {working_hours} hour.\n" 
+                              f"\t\tI advise you to rest for {time_relax} minutes</b>"
+        )
+        
+        vbox.pack_start(self.label, True, True, 0)
+
+        self.quit = Gtk.Button(label="Quit")
+        self.quit.connect("clicked", self.on_quit_cliked)
+        vbox.pack_start(self.quit, True, True, 0)
+
+        stack_switcher = Gtk.StackSwitcher()
+        stack_switcher.set_stack(stack)
+        vbox.pack_start(stack_switcher, True, True, 0)
+        vbox.pack_start(stack, True, True, 0)
+
+        
+
+        
+    def on_quit_cliked(self, button):
+        Gtk.main_quit()
+        exit(0)
+
+class Screen_time():
+    def __init__(self):
+        # преобразование минут в секунды
+        if working_hours >= 1:
+            self.working_hours = round(60 * int(working_hours) + (working_hours - int(working_hours)) * 100)
+        else:
+            self.working_hours = working_hours * 100
+
+        if time_relax >= 1:
+            self.time_relax = round(60 * int(time_relax) + (time_relax - int(time_relax)) * 100)
+        else:
+            self.time_relax = time_relax * 100
+
+        #super().__init__(title="MessageDialog Example")
+        
+        
+    def main(self):
+        time.sleep(self.working_hours)
+        print('\a')
+        win = Window()
+        win.connect("destroy", Gtk.main_quit)
+        win.show_all()
+        Gtk.main()
+        
+
+        while 1:
+            time.sleep(self.working_hours + self.time_relax)
+            print('\a')
+            win = Window()
+            win.connect("destroy", Gtk.main_quit)
+            win.show_all()
+            Gtk.main()
+
+
+#f __name__ == "__main__":
+window = Screen_time()
+#asyncio.run(window.main(), debug=True)
+window.main()
+
+
+
+
+
+
+
