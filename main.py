@@ -21,14 +21,19 @@ class Window(Gtk.Window):
 
         header = Gtk.HeaderBar(title="Screen time")
         header.props.show_close_button = True
-        
+
+        if working_hours < 60:
+            self.time_w = "minutes"
+
+        if time_relax < 60:
+            self.time_r = "minutes"
 
         stack = Gtk.Stack()
         stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
         stack.set_transition_duration(1000)
         self.label = Gtk.Label()
-        self.label.set_markup(f"<b>You have been sitting at the computer for {working_hours} hour.\n" 
-                              f"\t\tI advise you to rest for {time_relax} minutes</b>"
+        self.label.set_markup(f"<b>You have been sitting at the computer for {working_hours} {self.time_w}.\n" 
+                              f"\t\tI advise you to rest for {time_relax} {self.time_r}</b>"
         )
         
         vbox.pack_start(self.label, True, True, 0)
