@@ -62,9 +62,6 @@ class Screen_time():
             self.time_relax = round(60 * int(time_relax) + (time_relax - int(time_relax)) * 100)
         else:
             self.time_relax = time_relax * 100
-
-        #super().__init__(title="MessageDialog Example")
-        
         
     def main(self):
         time.sleep(self.working_hours)
@@ -84,9 +81,8 @@ class Screen_time():
             Gtk.main()
 
 
-#f __name__ == "__main__":
+
 window = Screen_time()
-#asyncio.run(window.main(), debug=True)
 window.main()
 
 
