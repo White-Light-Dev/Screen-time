@@ -1,6 +1,7 @@
 import time
 import os
 import gi
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -14,6 +15,9 @@ except:
 class Window(Gtk.Window):
     def __init__(self):
         super().__init__(title="Screen time")
+        if sound:
+            print('\a')
+
         self.set_border_width(10)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -21,7 +25,7 @@ class Window(Gtk.Window):
 
         header = Gtk.HeaderBar(title="Screen time")
         header.props.show_close_button = True
-
+      
         if working_hours < 60:
             self.time_w = "minutes"
 
@@ -31,11 +35,12 @@ class Window(Gtk.Window):
         stack = Gtk.Stack()
         stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
         stack.set_transition_duration(1000)
+        
         self.label = Gtk.Label()
-        self.label.set_markup(f"<b>You have been sitting at the computer for {working_hours} {self.time_w}.\n" 
+        self.label.set_markup(f"<b>You have been sitting at the computer for {working_hours} {self.time_w}.\n"
                               f"\t\tI advise you to rest for {time_relax} {self.time_r}</b>"
         )
-        
+
         vbox.pack_start(self.label, True, True, 0)
 
         self.quit = Gtk.Button(label="Quit")
@@ -47,12 +52,10 @@ class Window(Gtk.Window):
         vbox.pack_start(stack_switcher, True, True, 0)
         vbox.pack_start(stack, True, True, 0)
 
-        
-
-        
     def on_quit_cliked(self, button):
         Gtk.main_quit()
         exit(0)
+
 
 class Screen_time():
     def __init__(self):
@@ -66,32 +69,21 @@ class Screen_time():
             self.time_relax = round(60 * int(time_relax) + (time_relax - int(time_relax)) * 100)
         else:
             self.time_relax = time_relax * 100
-        
-    def main(self):
-        time.sleep(self.working_hours)
-        print('\a')
+
+    def window(self):
         win = Window()
         win.connect("destroy", Gtk.main_quit)
         win.show_all()
         Gtk.main()
-        
+
+    def main(self):
+        time.sleep(self.working_hours)
+        self.window()
 
         while 1:
             time.sleep(self.working_hours + self.time_relax)
-            print('\a')
-            win = Window()
-            win.connect("destroy", Gtk.main_quit)
-            win.show_all()
-            Gtk.main()
-
+            self.window()
 
 
 window = Screen_time()
 window.main()
-
-
-
-
-
-
-

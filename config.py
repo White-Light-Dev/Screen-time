@@ -1,3 +1,5 @@
 # specify the time in minutes
-working_hours = 60
-time_relax = 15
+working_hours = 0.10
+time_relax = 0.05
+sound = True
+flashing_window = True
