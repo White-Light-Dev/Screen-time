@@ -10,7 +10,7 @@ You can change the program settings in the config.py file(indicate time in minut
 Command to run on Linux: python3 main.py
 
 If you want, when the sound is played when the window appears, in the config.py file, change the value of the variable sound to True.
-My Telegram https://t.me/white_light_dev
+Come in my telegrams https://t.me/white_light_dev, there I am talking about open source programs, as well as about the updates of your programs.
 
 RU
 ==
@@ -21,4 +21,4 @@ RU
 
 Если хотите чтобы при появлении окна воспроизводился звук, то в файле config.py измените значение переменной sound на True
 
-Мой телеграм https://t.me/white_light_dev
+Заходите в мой телеграм https://t.me/white_light_dev, там я рассказываю об open source программах, а так же об обновлениях своих программ.
